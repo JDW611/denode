@@ -1,5 +1,5 @@
 import { AccessTokenClaimDto } from '@common/dto/token/access-token-claim.dto';
-import { User } from 'src/domain/user/user.entity';
+import { User } from '@domain/user/user.entity';
 
 export const TokenServiceKey = 'TokenServiceKey';
 
