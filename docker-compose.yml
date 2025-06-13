@@ -31,3 +31,4 @@ services:
                 yarn serve
         volumes:
             - ./:/app/
+            - /app/node_modules
