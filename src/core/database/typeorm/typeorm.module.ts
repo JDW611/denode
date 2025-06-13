@@ -5,7 +5,6 @@ import * as path from 'path';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 const entityPath = path.join(__dirname, '../../../entities/*/*.entity.js');
-const migrationPath = path.join(__dirname, '../../../migrations/*.js');
 
 export class TypeOrmModule {
     static forRoot(): DynamicModule {
@@ -18,23 +17,15 @@ export class TypeOrmModule {
                         const dbConfig = configService.getDatabaseConfig();
 
                         return {
-                            type: 'postgres',
+                            type: 'mysql',
                             host: dbConfig.host,
                             port: dbConfig.port,
                             username: dbConfig.username,
                             password: dbConfig.password,
                             database: dbConfig.database,
                             synchronize: dbConfig.synchronize,
-                            logging: dbConfig.logging,
                             entities: [entityPath],
                             namingStrategy: new SnakeNamingStrategy(),
-                            migrationsTableName: 'migrations',
-                            migrationsRun: true,
-                            migrations: [migrationPath],
-                            migrationsTransactionMode: 'all',
-                            extra: {
-                                max: 5,
-                            },
                         };
                     },
                 }),
