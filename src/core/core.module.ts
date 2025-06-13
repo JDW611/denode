@@ -8,7 +8,9 @@ import { TypeOrmModule } from './database/typeorm/typeorm.module';
 import { ShutDownManager } from './util/shutdown.manager';
 import { AlsModule } from './cls/cls.module';
 import { TransactionManager } from './database/typeorm/transaction-manager';
+import { TokenModule } from './token/token.module';
 
+const modules = [TokenModule];
 const providers = [LoggerService, TransactionManager];
 const interceptors: ClassProvider[] = [
     { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
@@ -18,7 +20,7 @@ const filters: ClassProvider[] = [{ provide: APP_FILTER, useClass: HttpException
 
 @Global()
 @Module({
-    imports: [AlsModule.forRoot(), TypeOrmModule.forRoot()],
+    imports: [AlsModule.forRoot(), TypeOrmModule.forRoot(), ...modules],
     providers: [ShutDownManager, ...providers, ...interceptors, ...filters],
     exports: [...providers],
 })

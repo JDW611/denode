@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ITokenService } from '../interfaces/token-service.interface';
 import { JwtService } from '@nestjs/jwt';
-import { RefreshTokenRepository } from 'src/domain/refresh-token/refresh-token-repository';
-import { IRefreshTokenRepository } from 'src/domain/refresh-token/refresh-token-repository.interface';
-import { User } from 'src/domain/user/user.entity';
+import { RefreshTokenRepository } from '@domain/refresh-token/refresh-token-repository';
+import { IRefreshTokenRepository } from '@domain/refresh-token/refresh-token-repository.interface';
+import { User } from '@domain/user/user.entity';
 import { AccessTokenClaimDto } from '@common/dto/token';
 import { v4 as uuid } from 'uuid';
 import { ConfigService } from '@config/services/config.service';
-import { RefreshToken } from 'src/domain/refresh-token/refresh-token.entity';
+import { RefreshToken } from '@domain/refresh-token/refresh-token.entity';
 import { DateTimeUtil } from '@common/utils/date-time.util';
 import { TokenPayloadDto } from '@common/dto/token';
 import {
