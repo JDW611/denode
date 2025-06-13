@@ -1,4 +1,4 @@
-import { AppConfig, Config, DatabaseConfig } from '@config/interfaces/config.interface';
+import { AppConfig, Config, DatabaseConfig, JWTConfig } from '@config/interfaces/config.interface';
 import { Injectable } from '@nestjs/common';
 import { ConfigService as NestConfigService } from '@nestjs/config';
 
@@ -14,6 +14,10 @@ export class ConfigService {
         return this.configService.get('app', { infer: true });
     }
 
+    get jwt(): JWTConfig {
+        return this.configService.get('jwt', { infer: true });
+    }
+
     getDatabaseConfig(): DatabaseConfig {
         const config = this.database;
         if (!config) {
@@ -26,6 +30,14 @@ export class ConfigService {
         const config = this.app;
         if (!config) {
             throw new Error('애플리케이션 설정을 찾을 수 없습니다.');
+        }
+        return config;
+    }
+
+    getJwtConfig(): JWTConfig {
+        const config = this.jwt;
+        if (!config) {
+            throw new Error('JWT 설정을 찾을 수 없습니다.');
         }
         return config;
     }

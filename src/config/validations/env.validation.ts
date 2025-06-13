@@ -37,6 +37,20 @@ class AppConfigValidation {
     environment: Environment;
 }
 
+class JWTConfigValidation {
+    @IsString()
+    secret: string;
+
+    @IsString()
+    issuer: string;
+
+    @IsString()
+    expiresIn: string;
+
+    @IsString()
+    refreshTokenExpired: string;
+}
+
 export class EnvironmentVariables {
     @ValidateNested()
     @Type(() => DatabaseConfigValidation)
@@ -45,6 +59,10 @@ export class EnvironmentVariables {
     @ValidateNested()
     @Type(() => AppConfigValidation)
     app: AppConfigValidation;
+
+    @ValidateNested()
+    @Type(() => JWTConfigValidation)
+    jwt: JWTConfigValidation;
 }
 
 export function validate(config: Record<string, unknown>) {
@@ -72,6 +90,12 @@ export function validate(config: Record<string, unknown>) {
         app: {
             port: parseInt(config.PORT as string, 10),
             environment: config.NODE_ENV as Environment,
+        },
+        jwt: {
+            secret: config.JWT_SECRET,
+            issuer: config.JWT_ISSUER,
+            expiresIn: config.JWT_EXPIRES_IN,
+            refreshTokenExpired: config.JWT_REFRESH_TOKEN_EXPIRED,
         },
     };
 }

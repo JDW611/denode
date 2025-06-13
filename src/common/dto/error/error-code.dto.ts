@@ -15,6 +15,13 @@ export const ErrorCodes = {
         'ENTITY_NOT_FOUND',
         'Entity Not Found',
     ),
+    UNAUTHORIZED: new ErrorCodeDTO(HttpStatus.UNAUTHORIZED, 'UNAUTHORIZED', 'Unauthorized'),
+    NOT_FOUND: new ErrorCodeDTO(HttpStatus.NOT_FOUND, 'NOT_FOUND', 'Not Found'),
+    METHOD_NOT_ALLOWED: new ErrorCodeDTO(
+        HttpStatus.METHOD_NOT_ALLOWED,
+        'METHOD_NOT_ALLOWED',
+        'Method Not Allowed',
+    ),
 } as const;
 
 export type ErrorCode = (typeof ErrorCodes)[keyof typeof ErrorCodes];
