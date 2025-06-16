@@ -30,3 +30,7 @@ export const MethodNotAllowedException = (message?: string, detail?: any): Servi
 export const BadRequestException = (message?: string, detail?: any): ServiceException => {
     return new ServiceException(ErrorCodes.BAD_REQUEST, message, detail);
 };
+
+export const ConflictException = (message?: string, detail?: any): ServiceException => {
+    return new ServiceException(ErrorCodes.CONFLICT, message, detail);
+};
