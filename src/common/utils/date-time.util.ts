@@ -55,4 +55,9 @@ export class DateTimeUtil {
 
         return LocalDateTime.parse(strDate, DateTimeUtil.DATE_TIME_FORMATTER);
     }
+
+    static addWeek(date: Date, weeks: number): LocalDateTime {
+        const localDate = this.toLocalDateTime(date);
+        return localDate.plusWeeks(weeks);
+    }
 }

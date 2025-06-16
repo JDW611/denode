@@ -4,8 +4,7 @@ import { ConfigService } from '@config/services/config.service';
 import * as path from 'path';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
-const entityPath = path.join(__dirname, '../../../entities/*/*.entity.js');
-
+const entityPath = path.join(__dirname, '../../../domain/*/*.entity.{ts,js}');
 export class TypeOrmModule {
     static forRoot(): DynamicModule {
         return {

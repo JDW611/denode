@@ -14,3 +14,19 @@ export const InvalidRequestBodyException = (message?: string, detail?: any): Ser
 export const EntityNotFoundException = (message?: string, detail?: any): ServiceException => {
     return new ServiceException(ErrorCodes.ENTITY_NOT_FOUND, message, detail);
 };
+
+export const UnauthorizedException = (message?: string, detail?: any): ServiceException => {
+    return new ServiceException(ErrorCodes.UNAUTHORIZED, message, detail);
+};
+
+export const NotFoundException = (message?: string, detail?: any): ServiceException => {
+    return new ServiceException(ErrorCodes.NOT_FOUND, message, detail);
+};
+
+export const MethodNotAllowedException = (message?: string, detail?: any): ServiceException => {
+    return new ServiceException(ErrorCodes.METHOD_NOT_ALLOWED, message, detail);
+};
+
+export const BadRequestException = (message?: string, detail?: any): ServiceException => {
+    return new ServiceException(ErrorCodes.BAD_REQUEST, message, detail);
+};

@@ -11,8 +11,8 @@ export abstract class GenericTypeOrmRepository<T extends RootEntity>
 
     abstract getName(): EntityTarget<T>;
 
-    async save(t: T | T[]): Promise<T[]> {
-        return this.getRepository().save(Array.isArray(t) ? t : [t]);
+    async save(t: T): Promise<T> {
+        return this.getRepository().save(t);
     }
 
     async findById(id: number): Promise<T | null> {
