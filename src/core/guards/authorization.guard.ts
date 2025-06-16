@@ -7,7 +7,13 @@ import { CanActivate, ExecutionContext, Inject, Injectable } from '@nestjs/commo
 export class AuthorizationGuard implements CanActivate {
     constructor(@Inject(TokenServiceKey) private readonly tokenService: ITokenService) {}
 
-    private readonly WHITELIST = ['/auth/login', '/auth/logout', '/auth/refresh', '/auth/signup'];
+    private readonly WHITELIST = [
+        '/auth/login',
+        '/auth/logout',
+        '/auth/refresh',
+        '/auth/signup',
+        '/health',
+    ];
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
