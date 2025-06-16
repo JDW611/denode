@@ -1,19 +1,19 @@
 export class TokenPayloadDto {
     readonly id: string;
     readonly userId: number;
-    readonly name: string;
+    readonly username: string;
 
-    constructor(id: string, userId: number, name: string) {
+    constructor(id: string, userId: number, username: string) {
         this.id = id;
         this.userId = userId;
-        this.name = name;
+        this.username = username;
     }
 
-    toPlain(): { id: string; userId: number; name: string } {
+    toPlain(): { id: string; userId: number; username: string } {
         return {
             id: this.id,
             userId: this.userId,
-            name: this.name,
+            username: this.username,
         };
     }
 }

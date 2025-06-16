@@ -59,7 +59,7 @@ export class TokenService implements ITokenService {
             if (!target) {
                 throw NotFoundException('Refresh Token이 존재하지 않습니다.');
             }
-            if (LocalDateTime.now() > target.expiredAt) {
+            if (LocalDateTime.now().isAfter(target.expiredAt)) {
                 throw MethodNotAllowedException('Refresh Token이 이미 만료되었습니다.');
             }
 
@@ -73,7 +73,6 @@ export class TokenService implements ITokenService {
             const newRefreshToken = uuid();
             target.tokenRotate(newRefreshToken, tokenClaim.userId);
             await this.repository.save(target);
-
             return [newToken, newRefreshToken];
         } catch (e) {
             throw UnauthorizedException('Token Invalid');

@@ -2,7 +2,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IAuthService } from '../interfaces/auth-service.interface';
 import { ITokenService, TokenServiceKey } from '@core/token/interfaces/token-service.interface';
 import { UserRepositoryKey, IUserRepository } from '@domain/user/user-repository.interface';
-import { BadRequestException } from '@core/exceptions/service.exception';
+import {
+    BadRequestException,
+    NotFoundException,
+    UnauthorizedException,
+} from '@core/exceptions/service.exception';
 import { User } from '@domain/user/user.entity';
 
 @Injectable()
@@ -33,5 +37,26 @@ export class AuthService implements IAuthService {
         const newUser = await this.userRepository.save(registerUser);
 
         return this.tokenService.createToken(newUser);
+    }
+
+    async login(username: string, password: string): Promise<string[]> {
+        const user = await this.userRepository.findOneByUsername(username);
+        if (!user) {
+            throw NotFoundException('User not found');
+        }
+
+        if (!user.isValidPassword(password)) {
+            throw UnauthorizedException('Invalid password');
+        }
+
+        return this.tokenService.createToken(user);
+    }
+
+    async logout(accessToken: string): Promise<void> {
+        await this.tokenService.removeToken(accessToken);
+    }
+
+    async refresh(accessToken: string, refreshToken: string): Promise<string[]> {
+        return this.tokenService.refresh(accessToken, refreshToken);
     }
 }

@@ -11,9 +11,6 @@ export class AccessTokenClaimDto {
     readonly username: string;
 
     @Expose()
-    readonly company: string;
-
-    @Expose()
     readonly iat: number;
 
     @Expose()

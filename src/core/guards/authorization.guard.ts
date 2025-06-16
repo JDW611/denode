@@ -35,11 +35,7 @@ export class AuthorizationGuard implements CanActivate {
             const [_, token] = headerArray;
             const accessClaim = this.tokenService.verifiedToken(token);
 
-            const denodeUser = new DenodeUser(
-                accessClaim.id,
-                accessClaim.userId,
-                accessClaim.company,
-            );
+            const denodeUser = new DenodeUser(accessClaim.id, accessClaim.userId);
 
             Object.assign(request, { denodeUser });
             return true;
