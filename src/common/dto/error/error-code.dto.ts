@@ -22,6 +22,7 @@ export const ErrorCodes = {
         'METHOD_NOT_ALLOWED',
         'Method Not Allowed',
     ),
+    BAD_REQUEST: new ErrorCodeDTO(HttpStatus.BAD_REQUEST, 'BAD_REQUEST', 'Bad Request'),
 } as const;
 
 export type ErrorCode = (typeof ErrorCodes)[keyof typeof ErrorCodes];

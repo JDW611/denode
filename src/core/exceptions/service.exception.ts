@@ -26,3 +26,7 @@ export const NotFoundException = (message?: string, detail?: any): ServiceExcept
 export const MethodNotAllowedException = (message?: string, detail?: any): ServiceException => {
     return new ServiceException(ErrorCodes.METHOD_NOT_ALLOWED, message, detail);
 };
+
+export const BadRequestException = (message?: string, detail?: any): ServiceException => {
+    return new ServiceException(ErrorCodes.BAD_REQUEST, message, detail);
+};
