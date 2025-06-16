@@ -1,10 +1,32 @@
 import { Exclude } from 'class-transformer';
 import { HttpStatus } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class ResponseEntity<T> {
     @Exclude() public readonly isSuccess: boolean;
     @Exclude() public readonly exception?: any;
     @Exclude() private readonly _data?: T;
+
+    @ApiProperty({
+        description: 'HTTP 상태 코드',
+        example: 200,
+        type: Number,
+    })
+    code: number;
+
+    @ApiProperty({
+        description: '응답 메시지',
+        example: 'OK',
+        type: String,
+    })
+    message: string;
+
+    @ApiProperty({
+        description: '응답 데이터',
+        required: false,
+        nullable: true,
+    })
+    result?: T;
 
     private constructor(isSuccess: boolean, exception?: any, data?: T) {
         if (isSuccess && exception) {
