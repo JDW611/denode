@@ -3,6 +3,8 @@ import { IProductService, ProductServiceKey } from '../interfaces/product-servic
 import { CreateProductRequest } from '@common/request/product/create-product.request';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ApiOkResponseEntity } from '@common/decorator/ApiCommonResponse';
+import { DenodeUser } from '@common/dto/context/denode-user.dto';
+import { DenodeContext } from '@core/decorators/denode-context.decorator';
 
 @ApiTags('Product API')
 @Controller('products')
@@ -14,7 +16,10 @@ export class ProductController {
     @ApiOperation({ summary: '제품 등록' })
     @HttpCode(HttpStatus.CREATED)
     @Post()
-    async create(@Body() dto: CreateProductRequest): Promise<void> {
-        return await this.productService.create(dto.toEntity());
+    async create(
+        @DenodeContext() denodeUser: DenodeUser,
+        @Body() dto: CreateProductRequest,
+    ): Promise<void> {
+        return await this.productService.create(denodeUser.userId, dto.toEntity());
     }
 }

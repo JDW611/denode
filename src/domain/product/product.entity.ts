@@ -1,8 +1,13 @@
 import { BaseTimeEntity } from '@core/database/typeorm/base-time.entity';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { User } from '@domain/user/user.entity';
 
 @Entity({ name: 'products' })
 export class Product extends BaseTimeEntity {
+    @ManyToOne(() => User, { nullable: false })
+    @JoinColumn({ name: 'user_id' })
+    user: User;
+
     @Column({ type: 'varchar', unique: true, nullable: false })
     code: string;
 
