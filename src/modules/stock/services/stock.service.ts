@@ -12,8 +12,9 @@ import { IProductRepository } from '@domain/product/product-repository.interface
 import { UserRepositoryKey } from '@domain/user/user-repository.interface';
 import { IUserRepository } from '@domain/user/user-repository.interface';
 import { BadRequestException, NotFoundException } from '@core/exceptions/service.exception';
-import { Transactional } from '@nestjs-cls/transactional';
+import { Propagation, Transactional } from '@nestjs-cls/transactional';
 import { LocalDate } from '@js-joda/core';
+import { TransactionalAdapterTypeOrm } from '@nestjs-cls/transactional-adapter-typeorm';
 
 @Injectable()
 export class StockService implements IStockService {
@@ -50,7 +51,9 @@ export class StockService implements IStockService {
         );
     }
 
-    @Transactional()
+    @Transactional<TransactionalAdapterTypeOrm>(Propagation.Required, {
+        isolationLevel: 'SERIALIZABLE',
+    })
     async createStockMovement(
         userId: number,
         type: StockMovementType,
@@ -78,12 +81,10 @@ export class StockService implements IStockService {
             expirationDate,
         );
 
-        let stock: Stock;
+        let stock = existingStock || Stock.of(user, product, 0, expirationDate);
 
-        if (existingStock) {
-            stock = existingStock;
-        } else {
-            stock = Stock.of(user, product, 0, expirationDate);
+        if (!existingStock && type === StockMovementType.OUT) {
+            throw NotFoundException('stock is not found');
         }
 
         const previousQuantity = stock.quantity;

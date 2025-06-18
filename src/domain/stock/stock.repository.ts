@@ -36,7 +36,7 @@ export class StockRepository extends GenericTypeOrmRepository<Stock> implements 
     async findByProductIdAndExpirationDate(
         userId: number,
         productId: number,
-        expirationDate: LocalDate,
+        expirationDate?: LocalDate,
     ): Promise<Stock | null> {
         return await this.getRepository().findOne({
             where: {

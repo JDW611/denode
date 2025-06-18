@@ -2,6 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 import { StockMovementType } from '@domain/stock/types/stock-movement.type';
 import { LocalDate } from '@js-joda/core';
+import { Transform } from 'class-transformer';
+import { DateTimeUtil } from '@common/utils/date-time.util';
 
 export class CreateStockMovementRequest {
     @ApiProperty({
@@ -32,9 +34,11 @@ export class CreateStockMovementRequest {
     @ApiProperty({
         description: '유통기한 (입고시)',
         nullable: true,
+        example: '2025-06-18',
         required: false,
     })
     @IsOptional()
+    @Transform(({ value }) => DateTimeUtil.toLocalDateBy(value))
     expirationDate?: LocalDate;
 
     @ApiProperty({

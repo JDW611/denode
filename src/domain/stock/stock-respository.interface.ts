@@ -13,6 +13,6 @@ export interface IStockRepository extends GenericRepository<Stock> {
     findByProductIdAndExpirationDate(
         userId: number,
         productId: number,
-        expirationDate: LocalDate,
+        expirationDate?: LocalDate,
     ): Promise<Stock | null>;
 }

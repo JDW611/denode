@@ -9,7 +9,7 @@ import { FindStockHistoriesRequest } from '@common/request/stock/find-stock-hist
 import { StockListResponse } from '@common/response/stock/stock-list.response';
 import { StockHistoryListResponse } from '@common/response/stock/stock-history-list.reponse';
 import { ApiOkResponseEntity } from '@common/decorator/ApiCommonResponse';
-import { CreateStockMovementRequest } from '@common/request/stock/create-stock-movement,request';
+import { CreateStockMovementRequest } from '@common/request/stock/create-stock-movement.request';
 
 @ApiTags('Stock API')
 @ApiBearerAuth()
