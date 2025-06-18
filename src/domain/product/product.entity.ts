@@ -34,11 +34,4 @@ export class Product extends BaseTimeEntity {
 
         return product;
     }
-
-    updateDetails(name: string, price: number, description?: string, category?: string): void {
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.category = category;
-    }
 }
