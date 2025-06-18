@@ -4,14 +4,14 @@ import { CreateProductRequest } from '@common/request/product/create-product.req
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ApiOkResponseEntity } from '@common/decorator/ApiCommonResponse';
 
-@ApiTags('Product')
-@Controller('product')
+@ApiTags('Product API')
+@Controller('products')
 export class ProductController {
     constructor(@Inject(ProductServiceKey) private readonly productService: IProductService) {}
 
     @ApiBearerAuth()
-    @ApiOkResponseEntity(null, HttpStatus.CREATED, '상품 생성 성공')
-    @ApiOperation({ summary: '상품 생성' })
+    @ApiOkResponseEntity(null, HttpStatus.CREATED, '제품 등록 성공')
+    @ApiOperation({ summary: '제품 등록' })
     @HttpCode(HttpStatus.CREATED)
     @Post()
     async create(@Body() dto: CreateProductRequest): Promise<void> {

@@ -54,8 +54,8 @@ export class StockController {
     }
 
     @ApiOperation({ summary: '제품 입/출고' })
-    @ApiOkResponseEntity(null, HttpStatus.OK, '제품 입/출고 성공')
-    @HttpCode(HttpStatus.OK)
+    @ApiOkResponseEntity(null, HttpStatus.NO_CONTENT, '제품 입/출고 성공')
+    @HttpCode(HttpStatus.NO_CONTENT)
     @Post('movements')
     async createStockMovement(
         @DenodeContext() denodeUser: DenodeUser,

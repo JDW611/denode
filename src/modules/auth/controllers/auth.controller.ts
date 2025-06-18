@@ -20,7 +20,7 @@ import { LoginRequest } from '@common/request/auth/login.request';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RefreshRequest } from '@common/request/auth/refresh.request';
 
-@ApiTags('Auth')
+@ApiTags('Auth API')
 @Controller('auth')
 export class AuthController {
     constructor(@Inject(AuthServiceKey) private readonly service: IAuthService) {}
@@ -73,6 +73,7 @@ export class AuthController {
 
     @ApiBearerAuth()
     @ApiOkResponseEntity(null, HttpStatus.NO_CONTENT, '로그아웃 성공 - 인증 토큰 삭제')
+    @ApiOperation({ summary: '로그아웃' })
     @HttpCode(HttpStatus.NO_CONTENT)
     @Delete('/logout')
     async logout(@Headers('Authorization') header: string): Promise<void> {
