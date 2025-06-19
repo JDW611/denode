@@ -42,9 +42,9 @@ export class LoggingInterceptor implements NestInterceptor {
 
                     this.logger.error('Request failed', {
                         type: 'ERROR',
-                        status: errorCode.status,
-                        code: errorCode.code,
-                        message: errorCode.message,
+                        status: errorCode?.status || 500,
+                        code: errorCode?.code || 'UNKNOWN_ERROR',
+                        message: errorCode?.message || 'Unknown error occurred',
                         method,
                         url,
                         responseTime,

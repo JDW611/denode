@@ -4,7 +4,7 @@ import { ResponseEntity } from '@common/response';
 @Injectable()
 export class TransformInterceptor implements NestInterceptor {
     intercept(
-        _context: ExecutionContext,
+        context: ExecutionContext,
         next: CallHandler<any>,
     ): Observable<any> | Promise<Observable<any>> {
         return next.handle().pipe(
@@ -13,7 +13,10 @@ export class TransformInterceptor implements NestInterceptor {
                     return data.toJSON();
                 }
 
-                return ResponseEntity.ok(data).toJSON();
+                const response = context.switchToHttp().getResponse();
+                const statusCode = response.statusCode;
+
+                return ResponseEntity.ok(data, statusCode).toJSON();
             }),
         );
     }

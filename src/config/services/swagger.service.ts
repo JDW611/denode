@@ -6,10 +6,10 @@ import { INestApplication } from '@nestjs/common';
 export class SwaggerService {
     setup(app: INestApplication): void {
         const config = new DocumentBuilder()
-            .setTitle('Your API Title')
-            .setDescription('Your API description')
+            .setTitle('Denode 과제테스트')
+            .setDescription('재고 관리 시스템 API')
             .setVersion('1.0')
-            .addTag('your-api-tag')
+            .addTag('Denode 과제테스트')
             .addBearerAuth()
             .build();
 

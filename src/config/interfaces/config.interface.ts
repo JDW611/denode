@@ -14,7 +14,15 @@ export interface AppConfig {
     environment: Environment;
 }
 
+export interface JWTConfig {
+    secret: string;
+    issuer: string;
+    expiresIn: string;
+    refreshTokenExpired: string;
+}
+
 export interface Config {
     database: DatabaseConfig;
     app: AppConfig;
+    jwt: JWTConfig;
 }
