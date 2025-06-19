@@ -66,7 +66,7 @@ export class StockController {
             dto.type,
             dto.productId,
             dto.quantity,
-            dto.expirationDate,
+            dto.expiresAt,
             dto.reason,
         );
     }

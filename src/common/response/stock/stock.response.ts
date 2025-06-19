@@ -13,7 +13,7 @@ export class StockResponse {
 
     readonly quantity: number;
 
-    readonly expirationDate?: LocalDate;
+    readonly expiresAt?: LocalDate;
 
     constructor(data: {
         id: number;
@@ -24,12 +24,12 @@ export class StockResponse {
             price: number;
         };
         quantity: number;
-        expirationDate?: LocalDate;
+        expiresAt?: LocalDate;
     }) {
         this.id = data.id;
         this.product = data.product;
         this.quantity = data.quantity;
-        this.expirationDate = data.expirationDate;
+        this.expiresAt = data.expiresAt;
     }
 
     static fromEntity(stock: Stock): StockResponse {
@@ -42,7 +42,7 @@ export class StockResponse {
                 price: stock.product.price,
             },
             quantity: stock.quantity,
-            expirationDate: stock.expirationDate,
+            expiresAt: stock.expiresAt,
         });
     }
 }

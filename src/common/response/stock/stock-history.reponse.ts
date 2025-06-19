@@ -13,7 +13,7 @@ export class StockHistoryResponse {
             name: string;
             price: number;
         };
-        expirationDate: LocalDate;
+        expiresAt: LocalDate;
     };
     readonly movementType: StockMovementType;
 
@@ -35,7 +35,7 @@ export class StockHistoryResponse {
                 name: string;
                 price: number;
             };
-            expirationDate: LocalDate;
+            expiresAt: LocalDate;
         };
         movementType: StockMovementType;
         quantity: number;
@@ -63,7 +63,7 @@ export class StockHistoryResponse {
                     name: stockHistory.stock.product.name,
                     price: stockHistory.stock.product.price,
                 },
-                expirationDate: stockHistory.stock.expirationDate,
+                expiresAt: stockHistory.stock.expiresAt,
             },
             movementType: stockHistory.type,
             quantity: stockHistory.quantity,

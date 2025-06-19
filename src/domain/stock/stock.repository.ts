@@ -23,7 +23,7 @@ export class StockRepository extends GenericTypeOrmRepository<Stock> implements 
             relations: ['product', 'user'],
             order: {
                 product: { code: 'ASC' },
-                expirationDate: 'ASC',
+                expiresAt: 'ASC',
                 createdAt: 'ASC',
             },
             skip: (page - 1) * limit,
@@ -33,16 +33,16 @@ export class StockRepository extends GenericTypeOrmRepository<Stock> implements 
         return { count: total, rows: stocks };
     }
 
-    async findByProductIdAndExpirationDate(
+    async findByProductIdAndExpiresAt(
         userId: number,
         productId: number,
-        expirationDate?: LocalDate,
+        expiresAt?: LocalDate,
     ): Promise<Stock | null> {
         return await this.getRepository().findOne({
             where: {
                 user: { id: userId },
                 product: { id: productId },
-                expirationDate: expirationDate,
+                expiresAt: expiresAt,
             },
             relations: ['product', 'user'],
         });

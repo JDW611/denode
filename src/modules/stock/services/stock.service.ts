@@ -59,7 +59,7 @@ export class StockService implements IStockService {
         type: StockMovementType,
         productId: number,
         quantity: number,
-        expirationDate?: LocalDate,
+        expiresAt?: LocalDate,
         reason?: string,
     ): Promise<void> {
         const [user, product] = await Promise.all([
@@ -75,13 +75,13 @@ export class StockService implements IStockService {
             throw NotFoundException('Product not found');
         }
 
-        const existingStock = await this.stockRepository.findByProductIdAndExpirationDate(
+        const existingStock = await this.stockRepository.findByProductIdAndExpiresAt(
             userId,
             productId,
-            expirationDate,
+            expiresAt,
         );
 
-        let stock = existingStock || Stock.of(user, product, 0, expirationDate);
+        let stock = existingStock || Stock.of(user, product, 0, expiresAt);
 
         if (!existingStock && type === StockMovementType.OUT) {
             throw NotFoundException('stock is not found');

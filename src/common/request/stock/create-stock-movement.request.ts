@@ -10,7 +10,8 @@ export class CreateStockMovementRequest {
         description: '재고 변동 타입',
         enum: StockMovementType,
         example: StockMovementType.IN,
-        required: true,
+        nullable: true,
+        required: false,
     })
     @IsEnum(StockMovementType)
     type: StockMovementType;
@@ -39,7 +40,7 @@ export class CreateStockMovementRequest {
     })
     @IsOptional()
     @Transform(({ value }) => DateTimeUtil.toLocalDateBy(value))
-    expirationDate?: LocalDate;
+    expiresAt?: LocalDate;
 
     @ApiProperty({
         description: '변동 사유',

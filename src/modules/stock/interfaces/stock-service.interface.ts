@@ -22,7 +22,7 @@ export interface IStockService {
         type: StockMovementType,
         productId: number,
         quantity: number,
-        expirationDate?: LocalDate,
+        expiresAt?: LocalDate,
         reason?: string,
     ): Promise<void>;
 }

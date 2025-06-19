@@ -23,14 +23,14 @@ export class Stock extends BaseTimeEntity {
         nullable: true,
         transformer: new LocalDateTransformer(),
     })
-    expirationDate?: LocalDate;
+    expiresAt?: LocalDate;
 
-    static of(user: User, product: Product, quantity: number, expirationDate?: LocalDate): Stock {
+    static of(user: User, product: Product, quantity: number, expiresAt?: LocalDate): Stock {
         const stock = new Stock();
         stock.user = user;
         stock.product = product;
         stock.quantity = quantity;
-        stock.expirationDate = expirationDate;
+        stock.expiresAt = expiresAt;
         return stock;
     }
 
@@ -47,6 +47,6 @@ export class Stock extends BaseTimeEntity {
     }
 
     isExpired(): boolean {
-        return this.expirationDate && this.expirationDate.isBefore(LocalDate.now());
+        return this.expiresAt && this.expiresAt.isBefore(LocalDate.now());
     }
 }

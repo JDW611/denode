@@ -10,9 +10,9 @@ export interface IStockRepository extends GenericRepository<Stock> {
         page: number,
         limit: number,
     ): Promise<{ count: number; rows: Stock[] }>;
-    findByProductIdAndExpirationDate(
+    findByProductIdAndExpiresAt(
         userId: number,
         productId: number,
-        expirationDate?: LocalDate,
+        expiresAt?: LocalDate,
     ): Promise<Stock | null>;
 }
