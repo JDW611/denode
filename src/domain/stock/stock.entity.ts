@@ -8,8 +8,8 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 @Entity({ name: 'stocks' })
 export class Stock extends BaseTimeEntity {
     @ManyToOne(() => User, { nullable: false })
-    @JoinColumn({ name: 'user_id' })
-    user: User;
+    @JoinColumn({ name: 'created_by' })
+    createdBy: User;
 
     @ManyToOne(() => Product, { nullable: false })
     @JoinColumn({ name: 'product_id' })
@@ -25,9 +25,9 @@ export class Stock extends BaseTimeEntity {
     })
     expiresAt?: LocalDate;
 
-    static of(user: User, product: Product, quantity: number, expiresAt?: LocalDate): Stock {
+    static of(createdBy: User, product: Product, quantity: number, expiresAt?: LocalDate): Stock {
         const stock = new Stock();
-        stock.user = user;
+        stock.createdBy = createdBy;
         stock.product = product;
         stock.quantity = quantity;
         stock.expiresAt = expiresAt;

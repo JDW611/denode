@@ -17,10 +17,10 @@ export class StockRepository extends GenericTypeOrmRepository<Stock> implements 
     ): Promise<{ count: number; rows: Stock[] }> {
         const [stocks, total] = await this.getRepository().findAndCount({
             where: {
-                user: { id: userId },
+                createdBy: { id: userId },
                 quantity: MoreThan(0),
             },
-            relations: ['product', 'user'],
+            relations: ['product', 'createdBy'],
             order: {
                 product: { code: 'ASC' },
                 expiresAt: 'ASC',
@@ -40,11 +40,11 @@ export class StockRepository extends GenericTypeOrmRepository<Stock> implements 
     ): Promise<Stock | null> {
         return await this.getRepository().findOne({
             where: {
-                user: { id: userId },
+                createdBy: { id: userId },
                 product: { id: productId },
                 expiresAt: expiresAt,
             },
-            relations: ['product', 'user'],
+            relations: ['product', 'createdBy'],
         });
     }
 }
