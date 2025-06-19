@@ -34,7 +34,7 @@ export class StockService implements IStockService {
         page: number,
         limit: number,
     ): Promise<{ count: number; rows: Stock[] }> {
-        return await this.stockRepository.findByUserIdWithPageNation(userId, page, limit);
+        return await this.stockRepository.findByUserIdWithPagination(userId, page, limit);
     }
 
     async findStockHistories(

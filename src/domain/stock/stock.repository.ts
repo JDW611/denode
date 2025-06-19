@@ -10,7 +10,7 @@ export class StockRepository extends GenericTypeOrmRepository<Stock> implements 
     getName(): EntityTarget<Stock> {
         return Stock.name;
     }
-    async findByUserIdWithPageNation(
+    async findByUserIdWithPagination(
         userId: number,
         page: number,
         limit: number,

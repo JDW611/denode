@@ -5,7 +5,7 @@ import { GenericRepository } from '@core/database/generic/generic.repository';
 export const StockRepositoryKey = 'StockRepository';
 
 export interface IStockRepository extends GenericRepository<Stock> {
-    findByUserIdWithPageNation(
+    findByUserIdWithPagination(
         userId: number,
         page: number,
         limit: number,
