@@ -1,6 +1,6 @@
 import { GenericTypeOrmRepository } from '@core/database/typeorm/generic-typeorm.repository';
 import { Injectable } from '@nestjs/common';
-import { EntityTarget, MoreThan } from 'typeorm';
+import { EntityTarget, IsNull, MoreThan } from 'typeorm';
 import { Stock } from './stock.entity';
 import { IStockRepository } from './stock-respository.interface';
 import { LocalDate } from '@js-joda/core';
@@ -42,7 +42,7 @@ export class StockRepository extends GenericTypeOrmRepository<Stock> implements 
             where: {
                 createdBy: { id: userId },
                 product: { id: productId },
-                expiresAt: expiresAt,
+                expiresAt: expiresAt ?? IsNull(),
             },
             relations: ['product', 'createdBy'],
         });
