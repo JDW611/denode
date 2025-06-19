@@ -11,7 +11,7 @@ import { ProductRepositoryKey } from '@domain/product/product-repository.interfa
 import { IProductRepository } from '@domain/product/product-repository.interface';
 import { UserRepositoryKey } from '@domain/user/user-repository.interface';
 import { IUserRepository } from '@domain/user/user-repository.interface';
-import { BadRequestException, NotFoundException } from '@core/exceptions/service.exception';
+import { NotFoundException } from '@core/exceptions/service.exception';
 import { Propagation, Transactional } from '@nestjs-cls/transactional';
 import { LocalDate } from '@js-joda/core';
 import { TransactionalAdapterTypeOrm } from '@nestjs-cls/transactional-adapter-typeorm';
@@ -90,12 +90,9 @@ export class StockService implements IStockService {
         const previousQuantity = stock.quantity;
 
         if (type === StockMovementType.IN) {
-            stock.addQuantity(quantity);
+            stock.receive(quantity);
         } else {
-            if (!stock.canReduceQuantity(quantity)) {
-                throw BadRequestException('stock is not enough');
-            }
-            stock.reduceQuantity(quantity);
+            stock.dispense(quantity);
         }
 
         await this.stockRepository.save(stock);

@@ -1,5 +1,6 @@
 import { BaseTimeEntity } from '@core/database/typeorm/base-time.entity';
 import { LocalDateTransformer } from '@core/database/typeorm/transformer';
+import { BadRequestException } from '@core/exceptions/service.exception';
 import { Product } from '@domain/product/product.entity';
 import { User } from '@domain/user/user.entity';
 import { LocalDate } from '@js-joda/core';
@@ -34,15 +35,18 @@ export class Stock extends BaseTimeEntity {
         return stock;
     }
 
-    addQuantity(quantity: number): void {
+    receive(quantity: number): void {
         this.quantity += quantity;
     }
 
-    reduceQuantity(quantity: number): void {
+    dispense(quantity: number): void {
+        if (!this.canDispense(quantity)) {
+            throw BadRequestException('stock is not enough');
+        }
         this.quantity -= quantity;
     }
 
-    canReduceQuantity(quantity: number): boolean {
+    private canDispense(quantity: number): boolean {
         return this.quantity >= quantity;
     }
 
