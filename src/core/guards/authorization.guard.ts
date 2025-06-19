@@ -23,12 +23,12 @@ export class AuthorizationGuard implements CanActivate {
 
         const authorizationHeader = request.headers.authorization;
         if (!authorizationHeader || authorizationHeader === '') {
-            throw UnauthorizedException('인증정보가 없습니다.');
+            throw UnauthorizedException('authorization header is not found');
         }
 
         const headerArray = authorizationHeader.split(' ');
         if (headerArray.length != 2) {
-            throw UnauthorizedException('인증정보가 형식이 옳바르지 않습니다.');
+            throw UnauthorizedException('authorization header is not valid');
         }
 
         try {
