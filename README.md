@@ -1,73 +1,84 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Denode 채용 과제 (정다운)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 개요
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+재고 관리 시스템 API 개발
 
-## Description
+## 기술 스택
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+| Name       | Version |
+| ---------- | ------- |
+| NestJS     | ^10.0.0 |
+| TypeScript | ^5.1.3  |
+| TypeORM    | 0.3.20  |
+| MySQL      | 8.0     |
 
-## Installation
+## 2. 설치 및 실행 방법
+
+### 설치
 
 ```bash
-$ yarn install
+$ git clone https://github.com/JDW611/denode-JeongDaWoon.git
+$ cd denode-JeongDaWoon
+
+# install
+$ yarn
+
 ```
 
-## Running the app
+### 환경변수 설정
+
+프로젝트 내에 존재하는 `.env`를 사용합니다.
+
+```.env
+# Database
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_USERNAME=testuser
+DB_PASSWORD=ekdns001
+DB_DATABASE=denode
+DB_SYNCHRONIZE=true
+
+# Application
+PORT=3000
+
+# JWT
+JWT_SECRET=test
+JWT_ISSUER=denode
+JWT_EXPIRES_IN=1h
+JWT_REFRESH_TOKEN_EXPIRED=2
+
+```
+
+### 실행
 
 ```bash
-# development
-$ yarn run start
+$ yarn docker:dev
 
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+# 또는 Docker Compose 직접 사용
+$ docker compose up --build
 ```
 
-## Test
+## 3. API 명세
 
-```bash
-# unit tests
-$ yarn run test
+-   swagger 문서
 
-# e2e tests
-$ yarn run test:e2e
+    > http://localhost:3000/api-docs
 
-# test coverage
-$ yarn run test:cov
-```
+## 4. 테스트 시나리오
 
-## Support
+1. **계정 생성**
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+    - 회원가입으로 새 계정 생성 및 accessToken 획득
+    - 또는 로그인하여 accessToken 획득
 
-## Stay in touch
+2. **제품 등록**
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+    - 발급된 accessToken 활용하여 제품 등록
 
-## License
+3. **재고 입/출고**
 
-Nest is [MIT licensed](LICENSE).
+    - 재고 입/출고 테스트
+
+4. **현황 확인**
+    - 재고 조회 및 재고 이력 조회 테스트 진행
