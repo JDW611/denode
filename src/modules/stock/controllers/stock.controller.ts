@@ -1,5 +1,5 @@
 import { Inject, Controller, HttpCode, HttpStatus, Get, Query, Post, Body } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { StockServiceKey } from '../interfaces/stock-service.interface';
 import { IStockService } from '../interfaces/stock-service.interface';
 import { DenodeContext } from '@core/decorators/denode-context.decorator';
@@ -13,6 +13,7 @@ import { CreateStockMovementRequest } from '@common/request/stock/create-stock-m
 
 @ApiTags('Stock API')
 @ApiBearerAuth()
+@ApiResponse({ status: 401, description: 'Unauthorized' })
 @Controller('stocks')
 export class StockController {
     constructor(
@@ -22,6 +23,7 @@ export class StockController {
 
     @ApiOperation({ summary: '재고 조회' })
     @ApiOkResponseEntity(StockListResponse, HttpStatus.OK, '재고 조회 성공')
+    @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
     @HttpCode(HttpStatus.OK)
     @Get()
     async findStocks(
@@ -38,6 +40,7 @@ export class StockController {
 
     @ApiOperation({ summary: '재고 이력 조회' })
     @ApiOkResponseEntity(StockHistoryListResponse, HttpStatus.OK, '재고 이력 조회 성공')
+    @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
     @HttpCode(HttpStatus.OK)
     @Get('history')
     async findStockHistories(
@@ -55,6 +58,8 @@ export class StockController {
 
     @ApiOperation({ summary: '제품 입/출고' })
     @ApiOkResponseEntity(null, HttpStatus.NO_CONTENT, '제품 입/출고 성공')
+    @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
+    @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Not Found' })
     @HttpCode(HttpStatus.NO_CONTENT)
     @Post('movements')
     async createStockMovement(
