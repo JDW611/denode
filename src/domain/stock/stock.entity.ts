@@ -1,5 +1,6 @@
 import { BaseTimeEntity } from '@core/database/typeorm/base-time.entity';
 import { LocalDateTransformer } from '@core/database/typeorm/transformer';
+import { BadRequestException } from '@core/exceptions/service.exception';
 import { Product } from '@domain/product/product.entity';
 import { User } from '@domain/user/user.entity';
 import { LocalDate } from '@js-joda/core';
@@ -8,8 +9,8 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 @Entity({ name: 'stocks' })
 export class Stock extends BaseTimeEntity {
     @ManyToOne(() => User, { nullable: false })
-    @JoinColumn({ name: 'user_id' })
-    user: User;
+    @JoinColumn({ name: 'created_by' })
+    createdBy: User;
 
     @ManyToOne(() => Product, { nullable: false })
     @JoinColumn({ name: 'product_id' })
@@ -23,30 +24,33 @@ export class Stock extends BaseTimeEntity {
         nullable: true,
         transformer: new LocalDateTransformer(),
     })
-    expirationDate?: LocalDate;
+    expiresAt?: LocalDate;
 
-    static of(user: User, product: Product, quantity: number, expirationDate?: LocalDate): Stock {
+    static of(createdBy: User, product: Product, quantity: number, expiresAt?: LocalDate): Stock {
         const stock = new Stock();
-        stock.user = user;
+        stock.createdBy = createdBy;
         stock.product = product;
         stock.quantity = quantity;
-        stock.expirationDate = expirationDate;
+        stock.expiresAt = expiresAt;
         return stock;
     }
 
-    addQuantity(quantity: number): void {
+    receive(quantity: number): void {
         this.quantity += quantity;
     }
 
-    reduceQuantity(quantity: number): void {
+    dispense(quantity: number): void {
+        if (!this.canDispense(quantity)) {
+            throw BadRequestException('stock is not enough');
+        }
         this.quantity -= quantity;
     }
 
-    canReduceQuantity(quantity: number): boolean {
+    private canDispense(quantity: number): boolean {
         return this.quantity >= quantity;
     }
 
     isExpired(): boolean {
-        return this.expirationDate && this.expirationDate.isBefore(LocalDate.now());
+        return this.expiresAt && this.expiresAt.isBefore(LocalDate.now());
     }
 }

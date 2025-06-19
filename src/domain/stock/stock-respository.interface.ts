@@ -5,14 +5,14 @@ import { GenericRepository } from '@core/database/generic/generic.repository';
 export const StockRepositoryKey = 'StockRepository';
 
 export interface IStockRepository extends GenericRepository<Stock> {
-    findByUserIdWithPageNation(
+    findByUserIdWithPagination(
         userId: number,
         page: number,
-        limit: number,
+        size: number,
     ): Promise<{ count: number; rows: Stock[] }>;
-    findByProductIdAndExpirationDate(
+    findByProductIdAndExpiresAt(
         userId: number,
         productId: number,
-        expirationDate?: LocalDate,
+        expiresAt?: LocalDate,
     ): Promise<Stock | null>;
 }

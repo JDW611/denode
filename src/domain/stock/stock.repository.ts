@@ -1,6 +1,6 @@
 import { GenericTypeOrmRepository } from '@core/database/typeorm/generic-typeorm.repository';
 import { Injectable } from '@nestjs/common';
-import { EntityTarget, MoreThan } from 'typeorm';
+import { EntityTarget, IsNull, MoreThan } from 'typeorm';
 import { Stock } from './stock.entity';
 import { IStockRepository } from './stock-respository.interface';
 import { LocalDate } from '@js-joda/core';
@@ -10,41 +10,41 @@ export class StockRepository extends GenericTypeOrmRepository<Stock> implements 
     getName(): EntityTarget<Stock> {
         return Stock.name;
     }
-    async findByUserIdWithPageNation(
+    async findByUserIdWithPagination(
         userId: number,
         page: number,
-        limit: number,
+        size: number,
     ): Promise<{ count: number; rows: Stock[] }> {
         const [stocks, total] = await this.getRepository().findAndCount({
             where: {
-                user: { id: userId },
+                createdBy: { id: userId },
                 quantity: MoreThan(0),
             },
-            relations: ['product', 'user'],
+            relations: ['product', 'createdBy'],
             order: {
                 product: { code: 'ASC' },
-                expirationDate: 'ASC',
+                expiresAt: 'ASC',
                 createdAt: 'ASC',
             },
-            skip: (page - 1) * limit,
-            take: limit,
+            skip: (page - 1) * size,
+            take: size,
         });
 
         return { count: total, rows: stocks };
     }
 
-    async findByProductIdAndExpirationDate(
+    async findByProductIdAndExpiresAt(
         userId: number,
         productId: number,
-        expirationDate?: LocalDate,
+        expiresAt?: LocalDate,
     ): Promise<Stock | null> {
         return await this.getRepository().findOne({
             where: {
-                user: { id: userId },
+                createdBy: { id: userId },
                 product: { id: productId },
-                expirationDate: expirationDate,
+                expiresAt: expiresAt ?? IsNull(),
             },
-            relations: ['product', 'user'],
+            relations: ['product', 'createdBy'],
         });
     }
 }

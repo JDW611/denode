@@ -5,8 +5,8 @@ import { User } from '@domain/user/user.entity';
 @Entity({ name: 'products' })
 export class Product extends BaseTimeEntity {
     @ManyToOne(() => User, { nullable: false })
-    @JoinColumn({ name: 'user_id' })
-    user: User;
+    @JoinColumn({ name: 'created_by' })
+    createdBy: User;
 
     @Column({ type: 'varchar', unique: true, nullable: false })
     code: string;

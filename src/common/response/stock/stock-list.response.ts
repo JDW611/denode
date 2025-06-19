@@ -22,7 +22,7 @@ export class StockListResponse extends BaseListResponse<StockResponse> {
                     price: 10000,
                 },
                 quantity: 100,
-                expirationDate: '2024-12-31',
+                expiresAt: '2024-12-31',
             },
         ],
     })

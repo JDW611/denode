@@ -11,8 +11,8 @@ export class StockHistory extends BaseTimeEntity {
     stock: Stock;
 
     @ManyToOne(() => User, { nullable: false })
-    @JoinColumn({ name: 'user_id' })
-    user: User;
+    @JoinColumn({ name: 'created_by' })
+    createdBy: User;
 
     @Column({
         type: 'enum',
@@ -35,7 +35,7 @@ export class StockHistory extends BaseTimeEntity {
 
     static of(
         stock: Stock,
-        user: User,
+        createdBy: User,
         type: StockMovementType,
         quantity: number,
         previousQuantity: number,
@@ -44,7 +44,7 @@ export class StockHistory extends BaseTimeEntity {
     ): StockHistory {
         const history = new StockHistory();
         history.stock = stock;
-        history.user = user;
+        history.createdBy = createdBy;
         history.type = type;
         history.quantity = quantity;
         history.previousQuantity = previousQuantity;

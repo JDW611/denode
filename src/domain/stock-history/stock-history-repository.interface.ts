@@ -8,7 +8,7 @@ export interface IStockHistoryRepository extends GenericRepository<StockHistory>
     findByUserIdWithPagination(
         userId: number,
         page: number,
-        limit: number,
+        size: number,
         type?: StockMovementType,
     ): Promise<{ count: number; rows: StockHistory[] }>;
 }

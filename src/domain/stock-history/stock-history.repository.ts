@@ -17,11 +17,11 @@ export class StockHistoryRepository
     async findByUserIdWithPagination(
         userId: number,
         page: number,
-        limit: number,
+        size: number,
         type?: StockMovementType,
     ): Promise<{ count: number; rows: StockHistory[] }> {
         const whereCondition: any = {
-            user: { id: userId },
+            createdBy: { id: userId },
         };
 
         if (type) {
@@ -30,12 +30,12 @@ export class StockHistoryRepository
 
         const [histories, total] = await this.getRepository().findAndCount({
             where: whereCondition,
-            relations: ['stock', 'stock.product', 'user'],
+            relations: ['stock', 'stock.product', 'createdBy'],
             order: {
                 createdAt: 'DESC',
             },
-            skip: (page - 1) * limit,
-            take: limit,
+            skip: (page - 1) * size,
+            take: size,
         });
 
         return { count: total, rows: histories };

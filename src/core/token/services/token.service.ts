@@ -10,11 +10,7 @@ import { ConfigService } from '@config/services/config.service';
 import { RefreshToken } from '@domain/refresh-token/refresh-token.entity';
 import { DateTimeUtil } from '@common/utils/date-time.util';
 import { TokenPayloadDto } from '@common/dto/token';
-import {
-    MethodNotAllowedException,
-    NotFoundException,
-    UnauthorizedException,
-} from '@core/exceptions/service.exception';
+import { NotFoundException, UnauthorizedException } from '@core/exceptions/service.exception';
 import { LocalDateTime } from '@js-joda/core';
 
 @Injectable()
@@ -47,7 +43,7 @@ export class TokenService implements ITokenService {
         try {
             return this.validate<AccessTokenClaimDto>(token);
         } catch (e) {
-            throw UnauthorizedException('인증 정보가 유효하지 않습니다.');
+            throw UnauthorizedException('token is invalid');
         }
     }
 
@@ -57,10 +53,10 @@ export class TokenService implements ITokenService {
             const target = await this.repository.findOneByTokens(tokenClaim.id, refreshToken);
 
             if (!target) {
-                throw NotFoundException('Refresh Token이 존재하지 않습니다.');
+                throw NotFoundException('refresh token is not found');
             }
             if (LocalDateTime.now().isAfter(target.expiredAt)) {
-                throw MethodNotAllowedException('Refresh Token이 이미 만료되었습니다.');
+                throw UnauthorizedException('refresh token is expired');
             }
 
             const newToken = this.jwtService.sign(
@@ -75,7 +71,7 @@ export class TokenService implements ITokenService {
             await this.repository.save(target);
             return [newToken, newRefreshToken];
         } catch (e) {
-            throw UnauthorizedException('Token Invalid');
+            throw UnauthorizedException('token is invalid');
         }
     }
 

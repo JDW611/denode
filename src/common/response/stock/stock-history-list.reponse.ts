@@ -23,7 +23,7 @@ export class StockHistoryListResponse extends BaseListResponse<StockHistoryRespo
                         name: '상품 이름',
                         price: 10000,
                     },
-                    expirationDate: '2024-12-31',
+                    expiresAt: '2024-12-31',
                 },
                 movementType: 'IN',
                 previousQuantity: 100,

@@ -12,15 +12,12 @@ export class ClassValidatorExceptionFactory {
                 constraints: Object.values(error.constraints || {}),
             }));
 
-            throw InvalidRequestBodyException(
-                '유효하지 않은 데이터입니다. 확인 후 다시 요청해주세요.',
-                {
-                    validation: {
-                        exceptions: validationExceptions,
-                        count: validationExceptions.length,
-                    },
+            throw InvalidRequestBodyException('invalid request body', {
+                validation: {
+                    exceptions: validationExceptions,
+                    count: validationExceptions.length,
                 },
-            );
+            });
         };
     }
 }

@@ -27,5 +27,5 @@ export abstract class ListRequest {
     @Type(() => Number)
     @IsNumber()
     @Min(1)
-    readonly limit: number = 10;
+    readonly size: number = 10;
 }

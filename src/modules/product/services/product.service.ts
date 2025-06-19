@@ -32,7 +32,7 @@ export class ProductService implements IProductService {
             throw NotFoundException('User not found');
         }
 
-        product.user = user;
+        product.createdBy = user;
 
         await this.productRepository.save(product);
     }
