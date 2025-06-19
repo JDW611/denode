@@ -31,7 +31,7 @@ export class StockController {
         const { count, rows } = await this.stockService.findStocks(
             denodeUser.userId,
             query.page,
-            query.limit,
+            query.size,
         );
         return new StockListResponse(count, rows);
     }
@@ -47,7 +47,7 @@ export class StockController {
         const { count, rows } = await this.stockService.findStockHistories(
             denodeUser.userId,
             query.page,
-            query.limit,
+            query.size,
             query.type,
         );
         return new StockHistoryListResponse(count, rows);

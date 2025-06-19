@@ -13,7 +13,7 @@ export class StockRepository extends GenericTypeOrmRepository<Stock> implements 
     async findByUserIdWithPagination(
         userId: number,
         page: number,
-        limit: number,
+        size: number,
     ): Promise<{ count: number; rows: Stock[] }> {
         const [stocks, total] = await this.getRepository().findAndCount({
             where: {
@@ -26,8 +26,8 @@ export class StockRepository extends GenericTypeOrmRepository<Stock> implements 
                 expiresAt: 'ASC',
                 createdAt: 'ASC',
             },
-            skip: (page - 1) * limit,
-            take: limit,
+            skip: (page - 1) * size,
+            take: size,
         });
 
         return { count: total, rows: stocks };

@@ -8,7 +8,7 @@ export interface IStockRepository extends GenericRepository<Stock> {
     findByUserIdWithPagination(
         userId: number,
         page: number,
-        limit: number,
+        size: number,
     ): Promise<{ count: number; rows: Stock[] }>;
     findByProductIdAndExpiresAt(
         userId: number,

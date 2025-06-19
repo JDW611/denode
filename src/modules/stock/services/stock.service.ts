@@ -32,21 +32,21 @@ export class StockService implements IStockService {
     async findStocks(
         userId: number,
         page: number,
-        limit: number,
+        size: number,
     ): Promise<{ count: number; rows: Stock[] }> {
-        return await this.stockRepository.findByUserIdWithPagination(userId, page, limit);
+        return await this.stockRepository.findByUserIdWithPagination(userId, page, size);
     }
 
     async findStockHistories(
         userId: number,
         page: number,
-        limit: number,
+        size: number,
         type?: StockMovementType,
     ): Promise<{ count: number; rows: StockHistory[] }> {
         return await this.stockHistoryRepository.findByUserIdWithPagination(
             userId,
             page,
-            limit,
+            size,
             type,
         );
     }

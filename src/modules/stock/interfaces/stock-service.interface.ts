@@ -9,12 +9,12 @@ export interface IStockService {
     findStocks(
         userId: number,
         page: number,
-        limit: number,
+        size: number,
     ): Promise<{ count: number; rows: Stock[] }>;
     findStockHistories(
         userId: number,
         page: number,
-        limit: number,
+        size: number,
         type?: StockMovementType,
     ): Promise<{ count: number; rows: StockHistory[] }>;
     createStockMovement(
